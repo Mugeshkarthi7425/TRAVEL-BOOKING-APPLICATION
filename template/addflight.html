@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/airplane.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">
+    </script>
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <title>Admin Panel</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #101010; /* Very dark background */
+            color: #D1D1D1; /* Soft light gray text */
+        }
+        
+        .container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background-color: #151515; /* Darker container background */
+        }
+        
+        .l-nav {
+            background-color: #212121; /* Dark but soft sidebar */
+            height: 100vh;
+            width: 250px;
+            color: #E6E6E6; /* Lighter color for sidebar text */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 20px;
+            padding-top: 20px;
+            padding-left: 20px;
+        }
+        
+        .user-name {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 26px;
+            color: #05f4f4; /* Subtle teal color for the name */
+            margin-bottom: 20px;
+        }
+        
+        ul > li > a {
+            text-decoration: none;
+            color: #D1D1D1;
+            font-size: 18px;
+            padding: 12px 18px;
+            display: block;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        ul > li > a:hover {
+            background: linear-gradient(90deg, #1132b6, #f904d4b0);
+            border-radius: 5px;
+        }
+        
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        ul > li {
+            border-bottom: 1px solid #444;
+        }
+        
+        .right-container {
+            flex: 2;
+            background-color: #181818; /* Dark background for main area */
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, #1132b6, #f904d4b0);
+            color: #f5f3f3;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        
+        .content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding: 30px;
+            background-color: #212121; /* Soft, darker background for form area */
+            border-radius: 15px;
+        }
+        
+        .company,
+        .where,
+        .which,
+        .eco-seat,
+        .pre-seat,
+        .eco-seat-price,
+        .pre-seat-price,
+        .when {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        input {
+            background-color: #2D2D2D; /* Dark gray background for inputs */
+            color: #D1D1D1;
+            padding: 12px;
+            font-size: 16px;
+            width: 48%;
+            border: 1px solid #444;
+            border-radius: 5px;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+        
+        input:focus {
+            border-color: #4EC9B0; /* Focused border color */
+            outline: none;
+            background-color: #3D3D3D; /* Slightly lighter on focus */
+        }
+        
+        button {
+            background: linear-gradient(90deg, #1132b6, #f904d4b0); /* Light teal button for contrast */
+            color: #faf6f6; /* Dark text on button */
+            padding: 15px 0;
+            width: 50%;
+            margin: 0 auto;
+            border-radius: 5px;
+            font-size: 18px;
+            text-transform: uppercase;
+            border: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #E6E6E6; /* Light gray on hover */
+            color: #101010;
+            cursor: pointer;
+        }
+        
+        ::placeholder {
+            color: #A0A0A0; /* Light gray placeholder text */
+        }
+        
+        .ui-autocomplete {
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'Roboto', sans-serif;
+            background-color: #2D2D2D;
+            color: #D1D1D1;
+            border: 1px solid #444;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        
+            .l-nav {
+                width: 100%;
+                height: auto;
+            }
+        
+            .right-container {
+                width: 100%;
+            }
+        
+            .content {
+                width: 90%;
+            }
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="l-nav">
+            <div class="user-name"><h3>Hi MUGESH KARTHI GS</h3></div>
+            <div class="nav-list">
+                <ul>
+                    <li><a href="/dashboard">Dash Board</a></li>
+                    <li class="f-status"> <a href="/adminpage">Flight Status</a> </li>
+                    <li><a href="/">Add Flight</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="header">
+                <h1>ADD FLIGHT</h1>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="content">
+                    <div class="company">
+                        <div class="company-name">
+                            <label for="companyname">Company Name:-</label>
+                            <input type="text" class="company-inp" placeholder="Enter Company Name" name="company_name">
+                        </div>
+                        <div class="pnr-no">
+                            <label for="pnrno">PNR No:-</label>
+                            <input type="number" class="pnr-inp" placeholder="Enter PNR No" name="pnr_no">
+                        </div>
+                    </div>
+                    <div class="where">
+                        <div class="from">
+                            <label for="from">From:-</label>
+                            <input type="text" class="from-inp" placeholder="From" name="from" id="from">
+                        </div>
+                        <div class="to">
+                            <label for="to">To:-</label>
+                            <input type="text" class="to-inp" placeholder="To" name="to" id="to">
+                        </div>
+                    </div>
+                    <div class="which">
+                        <div class="time">
+                            <label for="time">Depature Time:-</label>
+                            <input type="text" class="time-inp" placeholder="Depature Time" name="dept_time">
+                        </div>
+                        <div class="time">
+                            <label for="time">Reach Time:-</label>
+                            <input type="text" class="time-inp" placeholder="Depature Time" name="rich_time">
+                        </div>
+                        <div class="duration">
+                            <label for="duration">Duration:-</label>
+                            <input type="text" class="duration-inp" placeholder="duration" name="duration">
+                        </div>
+                    </div>
+                    <div class="eco-seat">
+                        <div class="economy">
+                            <label for="economyseat">Economy Seat:-</label>
+                            <input type="number" class="economy-seat-inp" placeholder="Economy Seat" name="economy_seat">
+                        </div>
+                        <div class="pre-economy">
+                            <label for="preeconomyseat">Premium Economy Seat:-</label>
+                            <input type="number" class="pre-economy-seat-inp" placeholder="Premium Economy Seat" name="pre_economy_seat">
+                        </div>
+                    </div>
+                    <div class="pre-seat">
+                        <div class="business">
+                            <label for="businesseat">Business Seat:-</label>
+                            <input type="number" class="business-seat-inp" placeholder="Business Seat" name="business_seat">
+                        </div>
+                        <div class="first-class">
+                            <label for="firstclass">First class Seat:-</label>
+                            <input type="number" class="fisrt-class-seat-inp" placeholder="first class Seat" name="first_class_seat">
+                        </div>
+                    </div>
+                    <div class="eco-seat-price">
+                        <div class="economy-price">
+                            <label for="economyseatprice">Economy Seat Price:-</label>
+                            <input type="number" class="economy-seat-price-inp" placeholder="Economy Seat Price" name="economy_seat_price">
+                        </div>
+                        <div class="pre-economy-price">
+                            <label for="preeconomyseatprice">Premium Economy Seat Pirce:-</label>
+                            <input type="number" class="pre-economy-seat-price-inp" placeholder="Premium Economy Seat Price" name="pre_economy_seat_price">
+                        </div>
+                    </div>
+                    <div class="pre-seat-price">
+                        <div class="business-price">
+                            <label for="businesseatprice">Business Seat Price:-</label>
+                            <input type="number" class="business-seat-Price-inp" placeholder="Business Seat Price" name="business_seat_price">
+                        </div>
+                        <div class="first-class-price">
+                            <label for="firstclassprice">First class Seat Price:-</label>
+                            <input type="number" class="fisrt-class-seat-price-inp" placeholder="first class Seat price" name="first_class_seat_price">
+                        </div>
+                    </div>
+                    <div class="when">
+                        <div class="one-day">
+                            <label for="oneday"> Date:-</label>
+                            <input type="date" class="day-one-inp" placeholder="Day One" name="date">
+                        </div>
+                        <div class="everyday">
+                            <label for="everyday"> Everyday:-</label>
+                            <input type="text" class="everyday-inp" placeholder="Everyday" name="everyday">
+                        </div>
+                    </div>
+                    <button type="submit">Add Flight</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(function() {
+            var availableTags = ["Delhi (DEL)",
+                "Mumbai (BOM)",
+                "Ahmedabad (AMD)",
+                "Bengaluru (BLR)",
+                "Hyderabad (HYD)",
+                "Chennai (MAA)",
+                "Kolkata (CCU)",
+                "Kochi (COK)",
+                "Los Angeles (LAX)",
+                "New York (JFK)",
+                "Chicago (ORD)",
+                "Atlanta (ATL)",
+                "Miami (MIA)",
+                "Dallas/Fort Worth (DFW)",
+                "San Francisco (SFO)",
+                "Sydney (SYD)",
+                "Melbourne (MEL)",
+                "Brisbane (BNE)",
+                "Perth (PER)",
+                "Adelaide (ADL)",
+                "Darwin (DRW)",
+                "Cairns (CNS)",
+                "Moscow (SVO)",
+                "Saint Petersburg (LED)",
+                "Sochi (AER)",
+                "Ekaterinburg (SVX)",
+                "Novosibirsk (OVB)",
+                "Kazan (KZN)",
+                "Vladivostok (VVO)",
+                "Toronto (YYZ)",
+                "Vancouver (YVR)",
+                "Montreal (YUL)",
+                "Calgary (YYC)",
+                "Edmonton (YEG)",
+                "Ottawa (YOW)",
+                "Halifax (YHZ)",
+                "Tokyo (HND)",
+                "Osaka (KIX)",
+                "Nagoya (NGO)",
+                "Fukuoka (FUK)",
+                "Sapporo (CTS)",
+                "Okinawa (OKA)",
+                "Sendai (SDJ)",
+                "Bangkok (BKK)",
+                "Phuket (HKT)",
+                "Chiang Mai (CNX)",
+                "Hat Yai (HDY)",
+                "Koh Samui (USM)",
+                "Krabi (KBV)",
+                "Surat Thani (URT)"
+            ];
+            $("#from").autocomplete({
+                source: availableTags
+            });
+            $("#to").autocomplete({
+                source: availableTags
+            });
+
+        });
+    </script>
+</body>
+
+</html>

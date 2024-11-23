@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/airplane.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">
+    </script>
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <title>Booking | Airline Ticket Booking</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif; 
+            background-size: cover; 
+        }
+
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, #181D31, #4B4E5B);
+            color: #F0E9D2;
+            padding: 0 1.5em;
+            height: 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 30px;
+            margin-right: 10px; /* Added margin to separate logo and text */
+        }
+
+        h1.title {
+            font-size: 1.5em;
+            margin-left: 10px;
+        }
+
+        .list-navbar {
+            margin-left: auto; /* Pushes the navbar to the right */
+        }
+
+        .list-navbar ul {
+            display: flex;
+            gap: 2rem;
+            list-style-type: none;
+        }
+
+        li {
+            position: relative;
+            height: 60px; /* Set a fixed height for consistency */
+            display: flex; /* Use flexbox for vertical centering */
+            align-items: center; /* Center items vertically */
+        }
+
+        li>a {
+            text-decoration: none;
+            color: #F0E9D2;
+            padding: 10px 5px;
+            border-radius: 5px;
+            transition: color 0.3s, text-decoration 0.3s;
+            font-weight: 600; /* Match the font weight */
+        }
+
+        li a:hover {
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+        
+        .footer {
+            display: flex;
+            flex-direction: row;
+            width: 100vw;
+            background-color: #181D31;
+            justify-content: space-between;
+        }
+        
+        .info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #E6DDC4;
+            gap: 1.5rem;
+            margin-left: 25px;
+        }
+        
+        .contact {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+            color: #E6DDC4;
+        }
+        
+        .address {
+            display: flex;
+            align-items: center;
+        }
+        
+        .address>img {
+            width: 25px;
+            height: 25px;
+        }
+        
+        .number {
+            display: flex;
+            align-items: center;
+        }
+        
+        .number>img {
+            width: 25px;
+            height: 25px;
+        }
+        
+        .email {
+            display: flex;
+            align-items: center;
+        }
+        
+        .email>img {
+            width: 25px;
+            height: 25px;
+        }
+        
+        .payment>img {
+            width: 200px;
+            height: 30px;
+        }
+        
+        .icon {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .icon>img {
+            width: 25px;
+            height: 25px;
+        }
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: url("/static/booking-background.jpg") no-repeat center center fixed; /* Background image */
+            background-size: cover; /* Ensure the image covers the entire container */
+        }
+        
+        .wrapper {
+            position: relative; /* Required for positioning the pseudo-element */
+            display: flex;
+            justify-content: center;
+            width: 35vw; /* Slightly wider for a better look */
+            height: 55vh; /* Increased height */
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.4); /* Lighter base color for contrast */
+            border: 1px solid rgba(255, 255, 255, 0.5); /* Soft border for definition */
+            border-radius: 15px; /* Increased border-radius for softer corners */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition for scaling */
+            overflow: hidden; /* Prevent overflow from the pseudo-element */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        }
+        
+        .wrapper:hover {
+            transform: scale(1.05); /* Scale effect on hover for interactivity */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+        }
+        
+        .wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2); /* Slightly less pronounced semi-transparent white background */
+            backdrop-filter: blur(px); /* Increased blur effect for a stronger glass effect */
+            border-radius: inherit; /* Match the wrapper's border radius */
+            z-index: 1; /* Layering above the background but below the content */
+        }
+        
+        .wrapper > * {
+            position: relative; /* Ensure child elements are above the pseudo-element */
+            z-index: 2; /* Layering above the glass effect */
+        }
+        
+        .wrapper > form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* Increased gap for better spacing */
+            margin: 20px;
+            align-items: center;
+        }
+        
+        /* Add styles for form inputs */
+        input[type="text"],
+        input[type="number"],
+        input[type="month"] {
+            width: 80%; /* Responsive width */
+            padding: 10px;
+            border: none; /* Remove default border */
+            border-radius: 8px; /* Rounded corners for input fields */
+            background-color: rgba(255, 255, 255, 0.9); /* Light background for inputs */
+            transition: border 0.3s, box-shadow 0.3s; /* Smooth transition for focus effect */
+        }
+        
+        input:focus {
+            outline: none; /* Remove default outline */
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); /* Green glow effect on focus */
+            border: 1px solid #28a745; /* Green border on focus */
+        }
+        
+        /* Style for submit button */
+        button {
+            background-color: #181D31; /* Dark background for the button */
+            color: #F0E9D2; /* Light text color */
+            padding: 10px 20px; /* Spacing inside the button */
+            border: none; /* Remove default border */
+            border-radius: 8px; /* Rounded corners for button */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s, transform 0.3s; /* Smooth transitions for hover */
+        }
+        
+        button:hover {
+            background-color: #28a745; /* Change color on hover */
+            transform: translateY(-2px); /* Slight lift effect on hover */
+        }
+        
+        
+        .location {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            width: 90%;
+        }
+        
+        .date {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            width: 90%;
+        }
+        
+        .psn-type {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            width: 90%;
+        }
+        
+        .passenger {
+            display: flex;
+            flex-direction: column;
+            flex: 1px;
+        }
+        
+        .from {
+            display: flex;
+            flex-direction: column;
+            flex: 1px;
+
+        }
+        
+        .to {
+            display: flex;
+            flex-direction: row; /* Set to row for horizontal alignment */
+            align-items: center; /* Aligns items vertically centered */
+            gap: 8px; /* Adds space between label and input */
+        }
+
+        
+        .departdate {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .returndate {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        form>button {
+            width: 50%;
+            padding: 5px 0px;
+            background-color: #181D31;
+            color: #E6DDC4;
+        }
+        
+         ::-webkit-input-placeholder {
+            padding-left: 5px;
+        }
+        
+        input {
+            border: none;
+            padding: 3px 0px;
+        }
+        
+        .type {
+            flex: 1;
+        }
+        
+        .travel-type {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .return {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .one-way {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        a {
+            text-decoration: none;
+            color: rgb(227, 222, 222);
+        }
+        
+        .ui-autocomplete {
+            max-height: 200px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="/static/airplane.png" alt="">
+        </div>
+        <h1>TRAVEL BOOKING APPLICATION</h1>
+        <div class="list-navbar">
+            <ul class="list-container">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/service">Service</a>
+                </li>
+                <li>
+                    <a href="/booking">Booking</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li><a href="/logout">Logout</a></li>
+                {% else %}
+                <li><a href="/login">Log In</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="wrapper">
+            <h1 style="color: #181D31;">Book Ticket</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="travel-type">
+                    <div class="return">
+                        <input type="radio" value="return" name="checking" style="cursor: pointer;" id="return-type" onclick="EnableDisableDt()">
+                        <label for="return" style="color: #181D31;">return</label>
+                    </div>
+                    <div class="one-way">
+                        <input type="radio" value="one-way" name="checking" style="cursor: pointer;" onclick="EnableDisableDt()">
+                        <label for="one-way " style="color: #181D31; ">one-way</label>
+                    </div>
+                </div>
+                <div class="location ">
+                    <div class="from ">
+                        <label for="fromlabel " style="color: #181D31; ">From.</label>
+                        <input type="text " name="From" class="From " placeholder="From" id="from">
+                    </div>
+                    <div class="to ">
+                        <label for="tolabel " style="color: #181D31; ">To.</label>
+                        <input type="text" name="To" class="To " placeholder="To " id="to">
+                    </div>
+                </div>
+                <div class="date ">
+                    <div class="departdate ">
+                        <label for="departdatelable " style="color: #181D31; ">Depart</label>
+                        <input type="date" name="departdate" required>
+                    </div>
+                    <div class="returndate ">
+                        <label for="noofpassenger " style="color: #181D31; ">Return</label>
+                        <input type="date" name="returndate" id="return-date" required>
+                    </div>
+                </div>
+                <div class="psn-type ">
+                    <div class="passenger ">
+                        <label for="passngerlabel " style="color: #181D31; ">Passenger</label>
+                        <input type="number " name="passenger" id="passenger " placeholder="passenger " required>
+                    </div>
+                    <div class="type ">
+                        <label for="cabinclasslabel " style="color: #181D31; ">Cabin Class</label>
+                        <select name="cabinclass" id="class " required>
+                            <option value="economy " style="color: #181D31; ">Economy</option>
+                            <option value="premiun-economy " style="color: #181D31; ">Premium Economy</option>
+                            <option value="Business " style="color: #181D31; ">Business</option>
+                            <option value="first-class " style="color: #181D31; ">First Class</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit " class="book-btn " name="book-btn "> Search Flights</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer ">
+        <div class="info ">
+            <h2>Airline Ticket Booking</h2>
+            <div class="desc ">Embark on your next adventure with a flight booking experience designed for convenience and comfort. Our platform simplifies the process, offering a range of airlines, competitive prices, and flexible booking options. Whether you're jetting off for business or pleasure, we make it easy to find the perfect flight.
+            </div>
+            <div class="icon ">
+                <img src="/static/instagram.png " alt=" ">
+                <img src="/static/facebook.png " alt=" ">
+                <img src="/static/twitter.png " alt=" ">
+            </div>
+        </div>
+        <div class="contact ">
+            <h2>contact</h2>
+            <div class="address">
+                <img src="/static/placeholder.png" alt=""> Admin_Manager
+            </div>
+            <div class="number">
+                <img src="/static/contact-book.png" alt=""> +91 8679898603
+            </div>
+            <div class="email">
+                <img src="/static/gmail.png" alt=""> adminmanager@gmail.com
+            </div>
+            <div class="payment">
+                <img src="/static/payment.jpeg" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function() {
+            var availableTags = ["Delhi (DEL)",
+                "Mumbai (BOM)",
+                "Ahmedabad (AMD)",
+                "Bengaluru (BLR)",
+                "Hyderabad (HYD)",
+                "Chennai (MAA)",
+                "Kolkata (CCU)",
+                "Kochi (COK)",
+                "Los Angeles (LAX)",
+                "New York (JFK)",
+                "Chicago (ORD)",
+                "Atlanta (ATL)",
+                "Miami (MIA)",
+                "Dallas/Fort Worth (DFW)",
+                "San Francisco (SFO)",
+                "Sydney (SYD)",
+                "Melbourne (MEL)",
+                "Brisbane (BNE)",
+                "Perth (PER)",
+                "Adelaide (ADL)",
+                "Darwin (DRW)",
+                "Cairns (CNS)",
+                "Moscow (SVO)",
+                "Saint Petersburg (LED)",
+                "Sochi (AER)",
+                "Ekaterinburg (SVX)",
+                "Novosibirsk (OVB)",
+                "Kazan (KZN)",
+                "Vladivostok (VVO)",
+                "Toronto (YYZ)",
+                "Vancouver (YVR)",
+                "Montreal (YUL)",
+                "Calgary (YYC)",
+                "Edmonton (YEG)",
+                "Ottawa (YOW)",
+                "Halifax (YHZ)",
+                "Tokyo (HND)",
+                "Osaka (KIX)",
+                "Nagoya (NGO)",
+                "Fukuoka (FUK)",
+                "Sapporo (CTS)",
+                "Okinawa (OKA)",
+                "Sendai (SDJ)",
+                "Bangkok (BKK)",
+                "Phuket (HKT)",
+                "Chiang Mai (CNX)",
+                "Hat Yai (HDY)",
+                "Koh Samui (USM)",
+                "Krabi (KBV)",
+                "Surat Thani (URT)"
+            ];
+            $("#from").autocomplete({
+                source: availableTags
+            });
+            $("#to").autocomplete({
+                source: availableTags
+            });
+
+        });
+
+        function EnableDisableDt() {
+            var radio_return = document.getElementById("return-type");
+            var date_field = document.getElementById("return-date");
+            date_field.disabled = radio_return.checked ? false : true;
+            if (!date_field.disabled) {
+                date_field.focus();
+            }
+        }
+    </script>
+</body>
+
+</html>
+
+</html>

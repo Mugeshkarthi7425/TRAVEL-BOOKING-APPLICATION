@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/airplane.png" type="image/x-icon">
+    <title>Flight availability</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            background-color: #F0E9D2;
+        }
+        
+        .wrapper {
+            display: flex;
+            width: 95vw;
+            margin: 15px;
+        }
+        
+        .depart {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+        
+        .return {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+        
+        .card {
+            display: flex;
+            flex-direction: column;
+            width: 95%;
+            padding: 5px;
+            margin: 10px 0px;
+            background-color: #E6DDC4;
+            transition: 1s;
+        }
+        
+        .card:hover {
+            box-shadow: 10px 5px 5px #b4ad99;
+        }
+        
+        .header {
+            display: flex;
+            margin: 10px;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .header>img {
+            width: 25px;
+            height: 25px;
+        }
+        
+        .details {
+            display: flex;
+            gap: 20px;
+            margin: 2px 10px 10px 10px;
+        }
+        
+        .d-time {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .departure {
+            font-weight: bold;
+            font-size: 2rem;
+            padding: 2px;
+        }
+        
+        .duration {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .r-time {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .price {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        
+        .reach {
+            font-weight: bold;
+            font-size: 2rem;
+            padding: 2px;
+        }
+        
+        .value {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .about {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .about>:first-child {
+            font-weight: bold;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .about>:last-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .selection {
+            position: fixed;
+            z-index: 99;
+            background-color: #181D31;
+            height: 10%;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+            display: flex;
+            color: white;
+            justify-content: space-evenly;
+            text-align: center;
+            margin: auto;
+        }
+        
+        .selection>.selection-one {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            justify-content: center;
+        }
+        
+        .selection>.selection-two {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            justify-content: center;
+        }
+        
+        .selection>.total-fare {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            justify-content: center;
+        }
+        
+        .selection>.continue {
+            padding-top: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            justify-content: center;
+        }
+        
+        .selection>.continue>.continue-btn {
+            padding: 3px 7px;
+            background-color: #E6DDC4;
+            border: none;
+            cursor: pointer;
+            font-weight: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="tools">
+                <div class="back"></div>
+                <div class="sort"></div>
+            </div>
+            <div class="wrapper">
+                <div class="depart">
+                    <div class="about">
+                        <div> {{from}} &#8594 {{to}}</div>
+                        <div> {{Dept_date}}</div>
+                    </div>
+                    {% for flight in flights_one%}
+                    <div class="card">
+                        <div class="header">
+                            <img src="/static/indigo.jpeg" alt="indigo">
+                            <div class="name" style="color: #181D31;">{{flight.company_name}}</div>
+                        </div>
+                        <div class="details">
+                            <div class="d-time">
+                                <div class="departure" style="color: #181D31;" id="dept-time-one">{{flight.dept_time}}</div>
+                                <div class="d-location" style="color: #181D31;">{{flight.From}}</div>
+                            </div>
+                            <div class="duration" style="color: #181D31;">
+                                {{flight.duration}}
+                            </div>
+                            <div class="r-time">
+                                <div class="reach" style="color: #181D31;" id="rich-time-one">{{flight.rich_time}}</div>
+                                <div class="r-location" style="color: #181D31;">{{flight.To}}</div>
+                                <span class="d-pnr" style="display: none;">{{flight.pnr_no}}</span>
+                            </div>
+                            <div class="price">
+
+                                {% if Cabin_class == "ECONOMY " %}
+                                <div class="value" style="color: #181D31;">₹ <span class="seat-price-one">{{flight.economy_seat_price}}</span></div>
+                                {% endif %} {% if Cabin_class == "PREMIUN-ECONOMY " %}
+                                <div class="value" style="color: #181D31;">₹ <span class="seat-price-one">{{flight.pre_economy_seat_price}}</span>
+                                </div>
+                                {% endif %} {% if Cabin_class == "BUSINESS " %}
+                                <div class="value" style="color: #181D31;">₹ <span class="seat-price-one">{{flight.business_price}}</span>
+                                </div>
+                                {% endif %} {% if Cabin_class == "FIRST-CLASS " %}
+                                <div class="value" style="color: #181D31;">₹ <span class="seat-price-one">{{flight.first_class_seat_price}}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <input type="radio" name="dept-flight" style="width: 20px; height: 20px;" id="radio-btn-one" required>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="return">
+                    <div class="about">
+                        <span> {{to}} &#8594 {{from}}</span>
+                        <span>{{Return_date}}</span>
+                    </div>
+                    {% for flight in flights_two%}
+                    <div class="card">
+                        <div class="header">
+                            <img src="/static/indigo.jpeg" alt="indigo">
+                            <div class="name" style="color: #181D31;">{{flight.company_name}}</div>
+                        </div>
+                        <div class="details return-details">
+                            <div class="d-time">
+                                <div class="departure dept-time" style="color: #181D31;" id="dept-time-two">{{flight.dept_time}}</div>
+                                <div class="d-location" style="color: #181D31;">{{flight.From}}</div>
+                            </div>
+                            <div class="duration" style="color: #181D31;">
+                                {{flight.duration}}
+                            </div>
+                            <div class="r-time">
+                                <div class="reach ri-time" style="color: #181D31;" id="rich-time-two">{{flight.rich_time}}</div>
+                                <div class="r-location" style="color: #181D31;">{{flight.To}}</div>
+                                <span class="r-pnr" style="display: none;">{{flight.pnr_no}}</span>
+                            </div>
+                            <div class="price">
+                                {% if Cabin_class == "ECONOMY " %}
+                                <div class="value return-value" style="color: #181D31;">₹ <span class="seat-price-two">{{flight.economy_seat_price}}</span></div>
+                                {% endif %} {% if Cabin_class == "PREMIUN-ECONOMY " %}
+                                <div class="value return-value" style="color: #181D31;">₹ <span class="seat-price-two">{{flight.pre_economy_seat_price}}</span></div>
+                                {% endif %} {% if Cabin_class == "BUSINESS " %}
+                                <div class="value return-value" style="color: #181D31;">₹ <span class="seat-price-two">{{flight.business_price}}</span></div>
+                                {% endif %} {% if Cabin_class == "FIRST-CLASS " %}
+                                <div class="value return-value" style="color: #181D31;">₹ <span class="seat-price-two">{{flight.first_class_seat_price}}</span></div>
+                                {% endif %}
+                            </div>
+                            <input type="radio" name="return-flight" style="width: 20px; height: 20px;" id="radio-btn-two" required>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="selection">
+                <div class="selection-one">
+                    <div>
+                        <span> {{from}} &#8594 {{to}} </span>
+                        <span>@</span>
+                        <span>₹</span>
+                        <span id="first-price">  </span>
+                    </div>
+                    <div>
+                        <span id="depature-time-one">  </span>
+                        <span>&middot</span>
+                        <span id="reach-time-one"> </span>
+                    </div>
+                </div>
+                <div class="selection-two">
+                    <div>
+                        <span> {{to}} &#8594 {{from}} </span>
+                        <span>@</span>
+                        <span>₹</span>
+                        <span id="second-price"> </span>
+                    </div>
+                    <div>
+                        <span id="depature-time-two"> </span>
+                        <span>&middot</span>
+                        <span id="reach-time-two"> </span>
+                    </div>
+                </div>
+                <div class="total-fare">
+                    <div>TOTAL FARE</div>
+
+                    <div>
+                        <span>₹</span>
+                        <span id="total-price"></span>
+                    </div>
+                    <input type="text" name="dpnr" id="pnr-one" style="display: none;">
+                    <input type="text" name="rpnr" id="pnr-two" style="display: none;">
+                </div>
+                <div class="continue">
+                    <button type="submit" id="continue-btn">Continue &#8594</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    const dept_radios = document.querySelectorAll('input[name="dept-flight"]');
+    const return_radios = document.querySelectorAll('input[name="return-flight"]');
+    const priceDisplay = document.getElementById('total-price');
+    const priceDisplayOne = document.getElementById('first-price');
+    const Dept_time_one = document.getElementById("depature-time-one");
+    const Rich_time_one = document.getElementById("reach-time-one");
+    const continue_btn = document.getElementById("continue-btn");
+    const pnr_dept_one = document.getElementById("pnr-one");
+    const pnr_return_two = document.getElementById("pnr-two");
+    //console.log(return_pnr);
+    //console.log(dept_pnr);
+    //var myArray = [dept_pnr, return_pnr];
+    //continue_btn.value = JSON.stringify(myArray);
+    var priceSecond = 0;
+    var priceOne = 0;
+    dept_radios.forEach(dept_radio => {
+        dept_radio.addEventListener('click', () => {
+            const selectedChild = dept_radio.closest('.details');
+            priceDisplayOne.innerHTML = selectedChild.querySelector('.seat-price-one').textContent;
+            Dept_time_one.innerHTML = selectedChild.querySelector('.departure').textContent;
+            Rich_time_one.innerHTML = selectedChild.querySelector('.reach').textContent;
+            priceOne = parseInt(selectedChild.querySelector('.seat-price-one').textContent);
+            pnr_dept_one.value = selectedChild.querySelector('.d-pnr').textContent;
+            console.log(selectedChild.querySelector(".d-pnr").textContent);
+            setTotalPrice();
+        });
+    });
+
+    const priceDisplaySecond = document.getElementById('second-price');
+    const Dept_time_two = document.getElementById("depature-time-two");
+    const Rich_time_two = document.getElementById("reach-time-two");
+
+    return_radios.forEach(return_radio => {
+        return_radio.addEventListener('click', () => {
+            const selectedChild = return_radio.closest('.return-details');
+            priceSecond = parseInt(selectedChild.querySelector('.seat-price-two').textContent);
+            priceDisplaySecond.innerHTML = selectedChild.querySelector('.seat-price-two').textContent;
+            Dept_time_two.innerHTML = selectedChild.querySelector('.dept-time').textContent;
+            Rich_time_two.innerHTML = selectedChild.querySelector('.ri-time').textContent;
+            pnr_return_two.value = selectedChild.querySelector(".r-pnr").textContent;
+            console.log(selectedChild.querySelector(".r-pnr").textContent);
+            setTotalPrice()
+        });
+    });
+
+    function setTotalPrice() {
+        if (priceDisplay.innerHTML != "0") {
+            priceDisplay.innerHTML = "0";
+        }
+        priceDisplay.innerHTML = priceOne + priceSecond;
+    }
+</script>
+
+</html>

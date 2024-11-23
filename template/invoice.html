@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .title {
+            text-align: center;
+            color: #2d87f0;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #2d87f0;
+        }
+        .invoice-details, .payment-info {
+            margin-bottom: 20px;
+        }
+        .separator {
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+        .boarding-pass-info {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .contact-info {
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            margin-right: 10px; /* Added margin to separate logo and text */
+        }
+    </style>
+</head>
+<body>
+        <div class="logo">
+            <img src="/Flight_Booking_System-main\Flight_Booking_System-main\booking\static\airplane.png" alt="">
+            <h1 class="title">TRAVEL BOOKING APPLICATION</h1>
+        </div>   
+    <h2>Payment Invoice Message</h2>
+    <h2>Thank you for your payment. Here are the details of your transaction:</h2>
+
+    <div class="invoice-details">
+        <h2><span class="highlight">Customer Name:</span> {{ user_name }}</h2>
+        <h2><span class="highlight">Email:</span> {{ user_email }}</h2>
+        <h2><span class="highlight">Booking ID:</span> {{ booking_id }}</h2>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="payment-info">
+        <h2><span class="highlight">Total Amount Paid:</span> {{ total_amount }} Rupees</h2>
+        <h2><span class="highlight">Payment Method:</span> {{ payment_method }}</h2>
+        <h2><span class="highlight">Status:</span> Payment Successful</h2>
+    </div>
+
+    <div class="boarding-pass-info">
+        <h1>Please note: Your boarding pass will be available in the airport Please collect it and bring a valid identification for the verification purposes. Safe travels, and we wish you a pleasant journey!"</h1>
+    </div>
+
+    <div class="contact-info">
+        <h2>If you have any questions, please feel free to contact us.</h2>
+        <h2>Mobile No: +91 8608560243</h2>
+    </div>
+
+    <h2>Best regards,<br>Travel Booking Application Team</h2>
+</body>
+</html>

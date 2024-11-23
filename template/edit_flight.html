@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Edit Flight</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
+            width: 100%;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="time"],
+        input[type="number"],
+        input[type="date"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #34495e;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="time"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+            outline: none;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            vertical-align: middle;
+        }
+
+        button {
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            color: #fff;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        form > * {
+            width: 100%;
+        }
+
+        form > button {
+            margin-top: 15px;
+        }
+
+        @media (max-width: 480px) {
+            form {
+                padding: 20px;
+                border-radius: 8px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form method="POST">
+        <h1>Edit Flight</h1>
+        {% csrf_token %}
+        <label>PNR No:</label>
+        <input type="text" name="pnr_no" value="{{ flight.pnr_no }}" required>
+
+        <label>From:</label>
+        <input type="text" name="from" value="{{ flight.From }}" required>
+
+        <label>To:</label>
+        <input type="text" name="to" value="{{ flight.To }}" required>
+
+        <label>Time:</label>
+        <input type="time" name="dept_time" value="{{ flight.dept_time }}" required>
+
+        <label>Economy:</label>
+        <input type="number" name="economy_seat" value="{{ flight.economy_seat }}" required>
+
+        <label>Premium Economy:</label>
+        <input type="number" name="pre_economy_seat" value="{{ flight.pre_economy_seat }}" required>
+
+        <label>Business:</label>
+        <input type="number" name="business_seat" value="{{ flight.business_seat }}" required>
+
+        <label>First Class:</label>
+        <input type="number" name="first_class_seat" value="{{ flight.first_class_seat }}" required>
+
+        <label>Date:</label>
+        <input type="date" name="date" value="{{ flight.date }}" required>
+
+        <label>
+            <input type="checkbox" name="everyday" {% if flight.everyday %}checked{% endif %}> Everyday
+        </label>
+
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+
+</html>

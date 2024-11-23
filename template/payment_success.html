@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            background: url("/static/img1.png") center/cover no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            width: 100%;
+            background: linear-gradient(90deg, #181D31, #4B4E5B);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            width: 45px;
+            height: 45px;
+            margin-right: 10px;
+        }
+
+        .navbar .logo .title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+        }
+        li a:hover {
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        .payment-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Add transparency */
+            border-radius: 15px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            max-width: 650px;
+            padding: 30px;
+            text-align: center;
+            animation: slideUp 0.8s ease;
+            margin-top: 100px; 
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .payment-container h1 {
+            color: #28a745;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .payment-icon {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .payment-details {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .payment-details p {
+            margin: 10px 0;
+        }
+
+        .payment-details .highlight {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .separator {
+            height: 1px;
+            background-color: #ddd;
+            margin: 20px 0;
+        }
+
+        .cta-btn {
+            margin-top: 30px;
+        }
+
+        .cta-btn a {
+            text-decoration: none;
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .cta-btn a:hover {
+            background-color: #218838;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .boarding-pass-info {
+            margin-top: 40px;
+            font-size: 1.1rem;
+            color: #004085;
+            background-color: #cce5ff;
+            border-left: 5px solid #004085;
+            padding: 15px 20px;
+            border-radius: 5px;
+            font-style: normal;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .payment-container {
+                padding: 20px;
+            }
+
+            .payment-container h1 {
+                font-size: 2rem;
+            }
+
+            .cta-btn a {
+                padding: 12px 24px;
+            }
+        }
+        .footer {
+            display: flex;
+            flex-direction: row;
+            width: 100vw;
+            background-color: #181D31;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #E6DDC4;
+            gap: 1rem;
+            margin-left: 25px;
+        }
+
+        .contact {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+            color: #E6DDC4;
+        }
+
+        .address,
+        .number,
+        .email {
+            display: flex;
+            align-items: center;
+        }
+
+        .address>img,
+        .number>img,
+        .email>img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .payment>img {
+            width: 150px;
+            height: 25px;
+        }
+
+        .icon {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon>img {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/static/airplane.png" alt="Logo">
+            <h1 class="title">TRAVEL BOOKING APPLICATION</h1>
+        </div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'service' %}">Service</a></li>
+            <li><a href="{% url 'booking' %}">Booking</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/logout">Logout</a></li>
+                {% else %}
+                <li><a href="/login">Log In</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="payment-container">
+        <div class="payment-icon">
+            &#x2714; <!-- Checkmark icon -->
+        </div>
+        <h1>Payment Successful!</h1>
+        <div class="payment-details">
+            <p>Thank you for your payment, <span class="highlight">{{ user_name }}</span>!</p>
+            <div class="separator"></div>
+            <p><span class="highlight">Payment Date:</span> {{ payment_date }}</p>
+            <p><span class="highlight">Transaction ID:</span> {{ transaction_id }}</p>
+        </div>
+
+        <div class="cta-btn">
+            <a href="{% url 'home' %}">Return to Home</a>
+        </div>
+
+        <div class="boarding-pass-info">
+            Your boarding pass will be available at the airport. Please bring valid identification.
+        </div>
+    </div>
+    <div class="footer">
+        <div class="info">
+            <h2>Airline Ticket Booking</h2>
+            <div class="desc">Embark on your next adventure with a flight booking experience designed for convenience and comfort. Our platform simplifies the process, offering a range of airlines, competitive prices, and flexible booking options. Whether you're jetting off for business or pleasure, we make it easy to find the perfect flight.
+            </div>
+            <div class="icon">
+                <img src="/static/instagram.png" alt="">
+                <img src="/static/facebook.png" alt="">
+                <img src="/static/twitter.png" alt="">
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Contact</h2>
+            <div class="address">
+                <img src="/static/placeholder.png" alt=""> Admin_Manager
+            </div>
+            <div class="number">
+                <img src="/static/contact-book.png" alt=""> +91 8679898603
+            </div>
+            <div class="email">
+                <img src="/static/gmail.png" alt=""> adminmanager@gmail.com
+            </div>
+            <div class="payment">
+                <img src="/static/payment.jpeg" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

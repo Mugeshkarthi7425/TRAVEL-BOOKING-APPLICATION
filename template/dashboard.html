@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+            background-color: #030303;
+        }
+        .header {
+            background: linear-gradient(90deg, #1132b6, #f904d4b0);
+            color: #fff;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            
+        }
+        .l-nav {
+            background-color: #212121; /* Dark but soft sidebar */
+            width: 250px;
+            color: #E6E6E6; /* Lighter color for sidebar text */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+        .user-name {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 26px;
+            color:#05f4f4;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        ul > li > a {
+            text-decoration: none;
+            color: #D1D1D1;
+            font-size: 18px;
+            padding: 12px 18px;
+            display: block;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        ul > li > a:hover {
+            background: linear-gradient(90deg, #1132b6, #f904d4b0);
+            color: #101010; /* Dark text on hover */
+            border-radius: 5px;
+        }
+        .right-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .stat {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+        }
+        .stat h2 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+        .stat p {
+            font-size: 24px;
+            margin: 0;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .table-container {
+            margin-top: 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th, table td {
+            border: 3px solid #050505;
+            padding: 12px;
+            text-align: center;
+        }
+        table th {
+            background: #1132b6;
+            color: #f1f1f1;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+    </div>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="l-nav">
+            <div class="user-name"><h3>Hi MUGESH KARTHI GS</h3></div>
+            <div class="nav-list">
+                <ul>
+                    <li><a href="/dashboard">Dash Board</a></li>
+                    <li class="f-status"> <a href="/adminpage">Flight Status</a> </li>
+                    <li><a href="/addflight">Add Flight</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Main Content -->
+        <div class="right-container">
+            <div class="stats">
+                <div class="stat">
+                    <h2>Total Flights</h2>
+                    <p>{{ total_flights }}</p>
+                </div>
+                <div class="stat">
+                    <h2>Total Tickets</h2>
+                    <p>{{ total_tickets }}</p>
+                </div>
+                <div class="stat">
+                    <h2>Revenue</h2>
+                    <p>₹{{ total_revenue }}</p>
+                </div>
+                <div class="stat">
+                    <h2>Booked Tickets</h2>
+                    <p>{{ total_payments }}</p>
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>S.No</th> <!-- New Serial Number Column -->
+                        <th>PNR No</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                    {% for flight in flights %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td> <!-- Serial Number -->
+                        <td>{{ flight.pnr_no }}</td>
+                        <td>{{ flight.From }}</td>
+                        <td>{{ flight.To }}</td>
+                        <td>{{ flight.date }}</td>
+                        <td>{{ flight.dept_time }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

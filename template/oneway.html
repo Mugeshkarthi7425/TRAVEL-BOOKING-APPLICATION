@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/airplane.png" type="image/x-icon">
+    <title>Flight availability</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9; /* Adding background to match the first snippet */
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            background-color: #F0E9D2;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #181D31;
+            padding: 10px;
+            color: white;
+        }
+
+        .logo img {
+            width: 30px;
+            margin-right: 10px;
+        }
+
+        h1.title {
+            font-size: 1.5em;
+            margin-left: 10px;
+            color: #F0E9D2;
+        }
+
+        .list-navbar {
+            margin-left: auto;
+        }
+
+        .list-navbar ul {
+            display: flex;
+            gap: 2rem;
+            list-style-type: none;
+        }
+
+        li {
+            position: relative;
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        li>a {
+            text-decoration: none;
+            color: #F0E9D2;
+            padding: 10px 5px;
+            border-radius: 5px;
+            transition: color 0.3s, text-decoration 0.3s;
+            font-weight: 600;
+        }
+
+        li a:hover {
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        .wrapper {
+            display: flex;
+            width: 95vw;
+            margin: 15px;
+        }
+        
+        .depart {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .return {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+        
+        .card {
+            display: flex;
+            flex-direction: column;
+            width: 95%;
+            padding: 5px;
+            margin: 10px 0px;
+            background-color: #E6DDC4;
+            transition: 1s;
+        }
+        
+        .card:hover {
+            box-shadow: 10px 5px 5px #b4ad99;
+        }
+        
+        .header {
+            display: flex;
+            margin: 10px;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .header>img {
+            width: 25px;
+            height: 25px;
+        }
+        
+        .details {
+            display: flex;
+            gap: 20px;
+            margin: 2px 10px 10px 10px;
+        }
+        
+        .d-time {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .departure {
+            font-weight: bold;
+            font-size: 2rem;
+            padding: 2px;
+        }
+        
+        .duration {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .r-time {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .price {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        
+        .reach {
+            font-weight: bold;
+            font-size: 2rem;
+            padding: 2px;
+        }
+        
+        .value {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .about {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .about>:first-child {
+            font-weight: bold;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .about>:last-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .selection {
+            position: fixed;
+            z-index: 99;
+            background-color: #181D31;
+            height: 10%;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+            display: flex;
+            color: white;
+            justify-content: space-evenly;
+            text-align: center;
+            margin: auto;
+        }
+        
+        .selection>.selection-one {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            justify-content: center;
+        }
+        
+        .selection>.total-fare {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            justify-content: center;
+        }
+        
+        .selection>.continue {
+            padding-top: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            justify-content: center;
+        }
+        
+        .selection>.continue>.continue-btn {
+            padding: 3px 7px;
+            background-color: #E6DDC4;
+            border: none;
+            cursor: pointer;
+            font-weight: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="navbar">
+            <div class="logo">
+                <img src="/static/airplane.png" alt="Logo">
+            </div>
+            <h1 class="title">TRAVEL BOOKING APPLICATION</h1>
+            <div class="list-navbar">
+                <ul class="list-container">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/service">Service</a></li>
+                    <li><a href="/booking">Booking</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="/logout">Logout</a></li>
+                    {% else %}
+                    <li><a href="/login">Log In</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="wrapper">
+            <div class="depart">
+                <div class="about">
+                    <div> {{from}} &#8594 {{to}}</div>
+                    <div> {{Dept_date}}</div>
+                </div>
+                {% for flight in flights%}
+                <div class="card">
+                    <div class="header">
+                        <img src="/static/indigo.jpeg" alt="indigo">
+                        <div class="name" style="color: #181D31;">{{flight.company_name}}</div>
+                    </div>
+                    <div class="details">
+                        <div class="d-time">
+                            <div class="departure" style="color: #181D31;" id="dept-time">{{flight.dept_time}}</div>
+                            <div class="d-location" style="color: #181D31;" value={{flight.From}} id="dept-loc">{{flight.From}}</div>
+                        </div>
+                        <div class=" duration " style="color: #181D31; ">
+                            {{flight.duration}}
+                        </div>
+                        <div class="r-time ">
+                            <div class="reach " style="color: #181D31;" id="rich-time">{{flight.rich_time}}</div>
+                            <div class="r-location " style="color: #181D31;">{{flight.To}}</div>
+                            <div class="pnr" style="display: none;">{{flight.pnr_no}}</div>
+                        </div>
+                        <div class="price ">
+                            {% if Cabin_class == "ECONOMY " %}
+                            <div class="value" style="color: #181D31;" id="seat-price">₹ {{flight.economy_seat_price}}</div>
+                            {% endif %} {% if Cabin_class == "PREMIUN-ECONOMY " %}
+                            <div class="value" style="color: #181D31;" id="seat-price">₹ {{flight.pre_economy_seat_price}}</div>
+                            {% endif %} {% if Cabin_class == "BUSINESS " %}
+                            <div class="value" style="color: #181D31;" id="seat-price">₹ {{flight.business_price}}</div>
+                            {% endif %} {% if Cabin_class == "FIRST-CLASS " %}
+                            <div class="value" style="color: #181D31;" id="seat-price">₹ {{flight.first_class_seat_price}}</div>
+                            {% endif %}
+                        </div>
+                        <input type="radio" name="dept-flight" style="width: 20px; height: 20px; " id="radio-btn">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="selection ">
+                <div class="selection-one ">
+                    <div>
+                        <span> {{from}} &#8594 {{to}} </span>
+                        <span>@</span>
+                        <span id="price"> </span>
+                    </div>
+                    <div>
+                        <span id="depature-time">  </span>
+                        <span>&middot</span>
+                        <span id="reach-time"></span>
+                    </div>
+                </div>
+                <div class="total-fare ">
+                    <div>TOTAL FARE</div>
+                    <div id="total-price">₹</div>
+                    <input type="text" name="dpnr" id="pnr-one" style="display: none;">
+                </div>
+                <div class="continue ">
+                    <button type="submit " class="continue-btn" id="cont-btn">Continue &#8594</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const radios = document.querySelectorAll('input[name="dept-flight"]');
+        const btn = document.getElementById("cont-btn");
+        const priceDisplay = document.getElementById('total-price');
+        const priceDisplayOne = document.getElementById('price');
+        const Dept_time = document.getElementById("depature-time");
+        const Rich_time = document.getElementById("reach-time");
+        const pnr_no_dept = document.getElementById("pnr-one");
+        
+        radios.forEach(radio => {
+            radio.addEventListener('click', () => {
+                const selectedChild = radio.closest('.details');
+                priceDisplay.innerHTML = selectedChild.querySelector('.value').textContent;
+                priceDisplayOne.innerHTML = selectedChild.querySelector('.value').textContent;
+                Dept_time.innerHTML = selectedChild.querySelector('.departure').textContent;
+                Rich_time.innerHTML = selectedChild.querySelector('.reach').textContent;
+                pnr_no_dept.value = selectedChild.querySelector('.pnr').textContent;
+            });
+        });
+    </script>
+
+</body>
+
+</html>

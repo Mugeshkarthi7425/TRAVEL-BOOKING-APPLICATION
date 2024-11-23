@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/airplane.png" type="image/x-icon">
+    <title>Ticket Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            background-color:#F0E9D2;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            width: 100%;
+            background: linear-gradient(90deg, #181D31, #4B4E5B);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .logo img {
+            width: 45px;
+            height: 45px;
+            margin-right: 10px;
+        }
+
+        .navbar .logo .title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #dec60f;
+            color: white;
+            border-radius: 5px;
+        }
+    
+        
+        .header {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .left-container {
+            flex: 3;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .right-container {
+            flex: 2;
+            height: 100%;
+        }
+        
+        .ticket-details {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            height: 70%;
+            margin-top: 25px;
+            border: 2px solid black;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #E6DDC4;
+            transition: 1s;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            height: 70%;
+            margin-top: 25px;
+            border: 2px solid black;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #E6DDC4;
+            transition: 1s;
+        }
+        
+        .passenger-details {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            height: 70%;
+            margin-top: 25px;
+            border: 2px solid black;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #E6DDC4;
+            transition: 1s;
+        }
+        
+        .contact-info:hover .ticket-details:hover {
+            box-shadow: 10px 10px 5px #b4ad99;
+        }
+        
+        .ticket-details-container {
+            width: 95%;
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            height: 70%;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        
+        .contact-info-container {
+            width: 95%;
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            height: 70%;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        
+        .passenger-details-get {
+            width: 95%;
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            height: 70%;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        
+        .flight-name {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .passenger-name {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .fare-summary {
+            background-color: #E6DDC4;
+            width: 90%;
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+        }
+        
+        .fare-summary-content {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .flight-ticket-price {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .charges-price {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .total-fare {
+            width: 80%;
+            margin-top: 25px;
+            border-top: 1px solid black;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        
+        .submit-btn {
+            width: 90%;
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+     <!-- Navbar -->
+     <nav class="navbar">
+        <div class="logo">
+            <img src="/static/airplane.png" alt="Logo">
+            <h1 class="title">TRAVEL BOOKING APPLICATION</h1>
+        </div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'service' %}">Service</a></li>
+            <li><a href="{% url 'booking' %}">Booking</a></li>
+            {% if user.is_authenticated %}
+                    <li><a href="/logout">Logout</a></li>
+                    {% else %}
+                    <li><a href="/login">Log In</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div id="travel" style="display: none;">{{travel_type}}</div>
+    {% if travel_type == "return" %} {% for flight_one, flight_two in Zipped %}
+    <div class="header">
+        <div class="left-container">
+
+            <div class="ticket-details">
+                <div class="ticket-details-header" style="font-size: 25px; font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid black; width: 100%;">Ticket Details</div>
+                <div class="ticket-details-container">
+                    <div class="flight-name" style="width: 20%;">
+                        <span style="font-weight: bold;">{{flight_one.company_name}}</span>
+                        <span>{{flight_one.pnr_no}}</span>
+                    </div>
+                    <div class="flight-dept-info">
+                        <div class="flight-dept-time" style="font-weight: bold; font-size: 25px;">{{flight_one.dept_time}}</div>
+                        <div class="flight-dept-date" style="font-weight: bold; font-size: 15px;">{{flight_one.date}}</div>
+                        <div class="flight-dept-loc" style=" font-size: 15px; color: rgb(66, 65, 65);">{{flight_one.From}}</div>
+                    </div>
+                    <div class="flight-duration" style="width: 30%; text-align: center; border-bottom: 1px solid rgb(41, 40, 40);">1h 30min</div>
+                    <div class="flight-return-info">
+                        <div class="flight-rich-time" style="font-weight: bold; font-size: 25px;">{{flight_one.rich_time}}</div>
+                        <div class="flight-rich-date" style="font-weight: bold; font-size: 15px;">{{flight_one.date}}</div>
+                        <div class="flight-rich-loc" style=" font-size: 15px; color: rgb(66, 65, 65);">{{flight_one.To}}</div>
+                    </div>
+
+                </div>
+                <div class="ticket-details-container">
+                    <div class="flight-name" style="width: 20%;">
+                        <span style="font-weight: bold;">{{flight_two.company_name}}</span>
+                        <span>{{flight_two.company_name}}</span>
+                    </div>
+                    <div class="flight-dept-info">
+                        <div class="flight-dept-time" style="font-weight: bold; font-size: 25px;">{{flight_two.dept_time}}</div>
+                        <div class="flight-dept-date" style="font-weight: bold; font-size: 15px;">{{flight_two.date}}</div>
+                        <div class="flight-dept-loc" style=" font-size: 15px; color: rgb(66, 65, 65);">{{flight_two.From}}</div>
+                    </div>
+                    <div class="flight-duration" style="width: 30%; text-align: center; border-bottom: 1px solid rgb(41, 40, 40);">1h 30min</div>
+                    <div class="flight-return-info">
+                        <div class="flight-rich-time" style="font-weight: bold; font-size: 25px;">{{flight_two.rich_time}}</div>
+                        <div class="flight-rich-date" style="font-weight: bold; font-size: 15px;">{{flight_two.date}}</div>
+                        <div class="flight-rich-loc" style=" font-size: 15px; color: rgb(66, 65, 65);">{{flight_two.To}}</div>
+                    </div>
+
+                </div>
+                <div class="lagguage-details" style="width: 100%; border-top: 1px solid black; color: rgb(74, 74, 74); padding-top: 5px; font-family: 'Roboto', sans-serif; font-size: 15px;">30 kgs Check-in 7kgs Cabin</div>
+            </div>
+
+
+            <div class="passenger-details">
+                <div class="passenger-details-header" style="margin-bottom: 5px; border-bottom: 1px solid black; width: 100%; display: flex; justify-content: space-between;">
+                    <div style="font-size: 25px; font-weight: bold; ">Passenger Details</div>
+                    <div>
+                        <span id="passnger-count">0</span>
+                        <span>
+                            Passenger
+                        </span>
+                    </div>
+                </div>
+                <div class="passenger-details-get">
+                    <form id="myForm" action="#">
+                        {% csrf_token %}
+                        <div class="passenger-name">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" name="First_name" placeholder="First Name" required>
+                            <br>
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" name="Last_name" placeholder="Last Name " required>
+                            <br>
+                        </div>
+                        <div class="passenger-gender " style="margin-bottom: 5px; margin-top: 5px; ">
+                            <label for="gender ">Gender:</label>
+                            <select id="gender " name="Gender" required>
+                                <option value="Male ">Male</option>
+                                <option value="Femail ">Female</option>
+                            </select>
+                            <br>
+                        </div>
+                        <button type="submit " id="addButton" style="width: 50px; cursor: pointer; background-color:#181D31; color: #E6DDC4; ">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="fare-summary">
+                <div class="fare-summary-header" style="font-size: 25px; font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid black; width: 100%;">Fare Summary</div>
+                <div class="fare-summary-content">
+                    <div class="flight-ticket-price">
+                        <span style="font-weight: bold;">Base Fare:</span><span style="font-weight: bold;" id="x-total-fare"></span>
+                    </div>
+                    <div class="charges-price">
+                        <span style="font-weight: bold;">Fee & Surcharges:</span> <span style="font-weight: bold;">₹100</span>
+                    </div>
+                </div>
+                <div class="total-fare">
+                    <span style="font-weight: bold; font-size: 20px; ">Total Fare:</span><span style="font-weight: bold; font-size: 20px; " id="x-final-fare"></span>
+                </div>
+            </div>
+            <div class="submit-btn">
+                <a href="/payment"><input type="button" value="Make a Payment" style="width: 120px; background-color: #181D31;color: #E6DDC4; cursor: pointer;"></a>
+            </div>
+        </div>
+        <div class="go-flight" style="display: none;">
+            {% if Cabin_class == "ECONOMY " %}
+            <span style="font-weight: bold; " id="base-price-go">{{flight_one.economy_seat_price}}</span>{% endif %} {% if Cabin_class == "PREMIUN-ECONOMY " %}
+            <span style="font-weight: bold; " id="base-price-go">{{flight_one.pre_economy_seat_price}}</span>{% endif %} {% if Cabin_class == "BUSINESS " %}
+            <span style="font-weight: bold; " id="base-price-go">{{flight_one.business_price}}</span>{% endif %} {% if Cabin_class == "FIRST-CLASS " %}
+            <span style="font-weight: bold; " id="base-price-go">{{flight_one.first_class_seat_price}}</span>{% endif %}
+        </div>
+        <div class="return-flight" style="display: none;">{% if Cabin_class == "ECONOMY " %}
+            <span style="font-weight: bold; " id="base-price-ret">{{flight_two.economy_seat_price}}</span>{% endif %} {% if Cabin_class == "PREMIUN-ECONOMY " %}
+            <span style="font-weight: bold; " id="base-price-ret">{{flight_two.pre_economy_seat_price}}</span>{% endif %} {% if Cabin_class == "BUSINESS " %}
+            <span style="font-weight: bold; " id="base-price-ret">{{flight_two.business_price}}</span>{% endif %} {% if Cabin_class == "FIRST-CLASS " %}
+            <span style="font-weight: bold; " id="base-price-ret">{{flight_two.first_class_seat_price}}</span>{% endif %}</div>
+    </div>
+    </div>
+    {% endfor %} {% else %} {% for flight in flights%}
+    <div class="header">
+        <div class="left-container">
+
+            <div class="ticket-details">
+                <div class="ticket-details-header" style="font-size: 25px; font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid black; width: 100%;">Ticket Details</div>
+                <div class="ticket-details-container">
+                    <div class="flight-name" style="width: 20%;">
+                        <span style="font-weight: bold;">{{flight.company_name}}</span>
+                        <span>{{flight.pnr_no}}</span>
+                    </div>
+                    <div class="flight-dept-info">
+                        <div class="flight-dept-time" style="font-weight: bold; font-size: 25px;">{{flight.dept_time}}</div>
+                        <div class="flight-dept-date" style="font-weight: bold; font-size: 15px;">{{flight.date}}</div>
+                        <div class="flight-dept-loc" style=" font-size: 15px; color: rgb(66, 65, 65);">{{flight.From}}</div>
+                    </div>
+                    <div class="flight-duration" style="width: 30%; text-align: center; border-bottom: 1px solid rgb(41, 40, 40);">1h 30min</div>
+                    <div class="flight-return-info">
+                        <div class="flight-rich-time" style="font-weight: bold; font-size: 25px;">{{flight.rich_time}}</div>
+                        <div class="flight-rich-date" style="font-weight: bold; font-size: 15px;">{{flight.date}}</div>
+                        <div class="flight-rich-loc" style=" font-size: 15px; color: rgb(66, 65, 65);">{{flight.To}}</div>
+                    </div>
+
+                </div>
+                <div class="lagguage-details" style="width: 100%; border-top: 1px solid black; color: rgb(74, 74, 74); padding-top: 5px; font-family: 'Roboto', sans-serif; font-size: 15px;">30 kgs Check-in 7kgs Cabin</div>
+            </div>
+
+
+            <div class="passenger-details">
+                <div class="passenger-details-header" style="margin-bottom: 5px; border-bottom: 1px solid black; width: 100%; display: flex; justify-content: space-between;">
+                    <div style="font-size: 25px; font-weight: bold; ">Passenger Details</div>
+                    <div>
+                        <span id="passnger-count"></span>
+                        <span>
+                            Passenger
+                        </span>
+                    </div>
+                </div>
+                <div class="passenger-details-get">
+                    <form id="myForm" action="#">
+                        {% csrf_token %}
+                        <div class="passenger-name">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" name="First_name" placeholder="First Name" required>
+                            <br>
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" name="Last_name" placeholder="Last Name " required>
+                            <br>
+                        </div>
+                        <div class="passenger-gender " style="margin-bottom: 5px; margin-top: 5px; ">
+                            <label for="gender ">Gender:</label>
+                            <select id="gender " name="Gender" required>
+                                <option value="Male ">Male</option>
+                                <option value="Femail ">Female</option>
+                            </select>
+                            <br>
+                        </div>
+                        <button type="submit " id="addButton" style="width: 50px; cursor: pointer; background-color:#181D31; color: #E6DDC4; ">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="right-container ">
+            <div class="fare-summary ">
+                <div class="fare-summary-header " style="font-size: 25px; font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid black; width: 100%; ">Fare Summary</div>
+                <div class="fare-summary-content ">
+                    <div class="flight-ticket-price ">
+                        <span style="font-weight: bold; ">Base Fare:</span> {% if Cabin_class == "ECONOMY " %}
+                        <span style="font-weight: bold; " id="base-price">{{flight.economy_seat_price}}</span>{% endif %} {% if Cabin_class == "PREMIUN-ECONOMY " %}
+                        <span style="font-weight: bold; " id="base-price">{{flight.pre_economy_seat_price}}</span>{% endif %} {% if Cabin_class == "BUSINESS " %}
+                        <span style="font-weight: bold; " id="base-price">{{flight.business_price}}</span>{% endif %} {% if Cabin_class == "FIRST-CLASS " %}
+                        <span style="font-weight: bold; " id="base-price">{{flight.first_class_seat_price}}</span>{% endif %}
+                    </div>
+                    <div class="charges-price ">
+                        <span style="font-weight: bold; ">Fee & Surcharges:</span> <span style="font-weight: bold; ">₹100</span>
+                    </div>
+                </div>
+                <div class="total-fare ">
+                    <span style="font-weight: bold; font-size: 20px; ">Total Fare:</span><span style="font-weight: bold; font-size: 20px; ">
+                    <span>₹</span><span id="final-price"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="submit-btn">
+                <a href="/payment"><input type="button" value="Make a Payment" style="width: 120px; background-color: #181D31;color: #E6DDC4; cursor: pointer;"></a>
+            </div>
+        </div>
+    </div>
+    {% endfor %} {% endif %}
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js "></script>
+<script>
+    let Traveltype = document.getElementById('travel').textContent;
+    console.log(Traveltype.length)
+    if (Traveltype == "return") {
+        let getPriceGo = document.getElementById('base-price-go').textContent
+        console.log(getPriceGo)
+        let getPriceRet = document.getElementById('base-price-ret').textContent
+        let xtotal = parseInt(getPriceGo) + parseInt(getPriceRet);
+        document.getElementById('x-total-fare').textContent = '₹' + xtotal;
+        let Fprice = xtotal + 100;
+        document.getElementById('x-final-fare').textContent = '₹' + Fprice;
+    } else {
+        let getPrice = document.getElementById('base-price').textContent
+        console.log(parseInt(getPrice))
+        let total = parseInt(getPrice) + 100;
+        document.getElementById('final-price').textContent = total;
+    }
+
+
+
+
+    let passnger_count = 0;
+
+    function onPassengerDetailSubmission(event) {
+        event.preventDefault();
+        const body = {};
+        const valueInArray = $(this).serializeArray()
+        valueInArray.forEach(e => {
+            body[e.name] = e.value
+        })
+        $.ajax({
+                method: "POST",
+                url: "/savepassenger",
+                data: body
+            })
+            .done(function(response) {
+                console.log(response)
+            })
+            .fail(function(response) {
+                console.log(response)
+            })
+
+        console.log(body);
+        passnger_count++;
+        console.log(passnger_count);
+        $('#passnger-count').text(passnger_count);
+        $('#myForm').get(0).reset();
+
+        var fare_price = $('#final-price').text()
+        console.log(fare_price)
+        if (passnger_count == 0) {
+            var final_price = fare_price * 1;
+            console.log(final_price)
+            $('#final-price').text(final_price);
+        } else {
+            var final_price = fare_price * passnger_count;
+            //var str_final_price = '₹' + final_price;
+            console.log(final_price)
+            $('#final-price').text(final_price);
+
+        }
+
+
+    }
+    $('#myForm').submit(onPassengerDetailSubmission)
+</script>
+
+</html>
+
+</html>
+
+</html>
+
+</html>

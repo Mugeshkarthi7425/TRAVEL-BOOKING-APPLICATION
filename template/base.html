@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/airplane.png" type="image/x-icon">
+    <title>Airline Ticket Booking</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9; 
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, #181D31, #4B4E5B);
+            color: #F0E9D2;
+            padding: 0 1.5em;
+            height: 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            margin-right: 10px; /* Added margin to separate logo and text */
+        }
+
+        h1.title {
+            font-size: 2em;
+            margin-left: 10px;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .list-navbar ul {
+            display: flex;
+            gap: 2rem;
+            list-style-type: none;
+        }
+
+        li {
+            position: relative;
+            height: 60px; /* Set a fixed height for consistency */
+            display: flex; /* Use flexbox for vertical centering */
+            align-items: center; /* Center items vertically */
+        }
+
+        li>a {
+            text-decoration: none;
+            color: #F0E9D2;
+            padding: 10px 5px;
+            border-radius: 5px;
+            transition: color 0.3s, text-decoration 0.3s;
+            font-weight: 600; /* Match the font weight to the first snippet */
+        }
+
+        li a:hover {
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center; /* Keeps items centered vertically */
+    justify-content: center; /* Center content horizontally */
+    padding-left: 50px; /* Adds padding to separate content from the left edge */
+    background: url("/static/img4.png") center/cover no-repeat;
+    flex-direction: column;
+    font-family: 'Verdana', sans-serif; 
+    padding: 50px;
+}
+
+.world > h1 {
+    font-size: 5rem;
+    color: #0e111d;
+    padding: 180px 0; /* Remove horizontal padding to keep text aligned to the left */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Added text shadow for depth */
+    text-align: left; /* Aligns the heading text to the left */
+    max-width: 100%; /* Ensure it doesn’t exceed container width */
+}
+
+.book > p {
+    color: #060606;
+    padding: 50px ; /* Align paragraph to the left */
+    font-size: 2em; /* Slightly larger font for better readability */
+    line-height: 1; /* Better spacing between lines */
+    text-align: left; /* Aligns the paragraph text to the left */
+    max-width: 100%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.btn {
+    margin-top: 20px; /* Space between text and buttons */
+}
+
+.btn a {
+    display: inline-block;
+    padding: 12px 20px; /* Increased padding for buttons */
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 30px; /* More rounded corners for a modern look */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
+    font-size: 1.1rem; /* Slightly larger font for buttons */
+    font-weight: bold; /* Bold text for better emphasis */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+.firts-btn {
+    background-color: #181D31;
+    color: #eeeef0;
+}
+
+.firts-btn:hover {
+    background-color: #dec60f;
+    color: #181D31;
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+}
+
+.second-btn {
+    background-color: #181D31;
+    color: #eeeef0;
+    font-weight: 600;
+    margin-top: 10px; /* Space between buttons */
+}
+
+.second-btn:hover {
+    background-color: #eeb30e;
+    color: #181D31;
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+}
+
+
+        .footer {
+            display: flex;
+            flex-direction: row;
+            width: 100vw;
+            background-color: #181D31;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #E6DDC4;
+            gap: 1.5rem;
+            margin-left: 25px;
+        }
+
+        .contact {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+            color: #E6DDC4;
+        }
+
+        .address,
+        .number,
+        .email {
+            display: flex;
+            align-items: center;
+        }
+
+        .address>img,
+        .number>img,
+        .email>img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .payment>img {
+            width: 150px;
+            height: 25px;
+        }
+
+        .icon {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon>img {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="/static/airplane.png" alt="">
+            <h1 class="title">TRAVEL BOOKING APPLICATION</h1>
+        </div>
+        <div class="list-navbar">
+            <ul class="list-container">
+                <li><a href="/">Home</a></li>
+                <li><a href="/service">Service</a></li>
+                <li>
+                    <a href="/booking">Booking</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li><a href="/logout">Logout</a></li>
+                {% else %}
+                <li><a href="/login">Log In</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="world">
+            <h1>EXPLORE WORLD!!!</h1>
+        </div>
+        <div class="book">
+            <p>Book your next adventure with us. Enjoy great deals and exceptional service.</p>
+        </div>
+        <div class="btn">
+            <a href="/booking" class="firts-btn"> Book Now </a>
+            <a href="/service" class="second-btn"> Our Services </a>
+        </div>
+        
+    </div>
+
+    <div class="footer">
+        <div class="info">
+            <h2>Airline Ticket Booking</h2>
+            <div class="desc">Embark on your next adventure with a flight booking experience designed for convenience and comfort. Our platform simplifies the process, offering a range of airlines, competitive prices, and flexible booking options. Whether you're jetting off for business or pleasure, we make it easy to find the perfect flight.
+            </div>
+            <div class="icon">
+                <img src="/static/instagram.png" alt="">
+                <img src="/static/facebook.png" alt="">
+                <img src="/static/twitter.png" alt="">
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Contact</h2>
+            <div class="address">
+                <img src="/static/placeholder.png" alt=""> Admin_Manager
+            </div>
+            <div class="number">
+                <img src="/static/contact-book.png" alt=""> +91 8679898603
+            </div>
+            <div class="email">
+                <img src="/static/gmail.png" alt=""> adminmanager@gmail.com
+            </div>
+            <div class="payment">
+                <img src="/static/payment.jpeg" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

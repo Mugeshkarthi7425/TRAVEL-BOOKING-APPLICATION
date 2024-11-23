@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/static/airplane.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        * {
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            
+        }
+        
+        .container {
+            display: flex; /* Use flexbox to place side by side */
+            width: 100%;
+            background-color: #252526;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            height: 100%;
+        }
+        
+        .l-nav {
+            background-color: #333;
+            width: 200px;
+            color: #9CDCFE;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        
+        .user-name {
+            font-size: 20px;
+            color: #05f4f4;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        ul > li {
+            margin-bottom: 15px;
+        }
+        
+        ul > li > a {
+            text-decoration: none;
+            color: #d4d4d4;
+            font-size: 18px;
+            transition: 0.2s;
+            padding: 10px 0;
+            display: block;
+        }
+        
+        ul > li > a:hover {
+            background: linear-gradient(90deg, #1132b6, #f904d4b0);
+            border-radius: 5px;
+        }
+        
+        .right-container {
+            flex: 1; /* Allow the right container to take the remaining space */
+            padding: 20px;
+            background-color: #1e1e1e;
+            overflow-y: auto;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, #1132b6, #f904d4b0);
+            color: #fff;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+        }
+        
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #2d2d2d;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: #d4d4d4;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #3f3f46;
+        }
+        
+        th {
+            background-color: #333;
+            color: #9CDCFE;
+            text-transform: uppercase;
+            font-weight: normal;
+        }
+        
+        td {
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #2d2d2d;
+        }
+        
+        tr:hover {
+            background-color: #3f3f46;
+            color: #ffffff;
+        }
+        
+        .flight-count {
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, #1132b6, #f904d4b0);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(249, 1, 175, 0.807);
+            text-align: center;
+            width: fit-content;
+        }
+        
+        .flight-count h2 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 255, 255, 0.6);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .flight-count:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0 6px 20px rgba(255, 117, 140, 0.6);
+        }
+        
+        /* Edit and Delete Button Styles */
+        .edit-btn {
+            background-color: #361fc5;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .edit-btn:hover {
+            background-color: #27d730;
+            transform: translateY(-3px);
+        }
+        
+        .edit-btn:active {
+            background-color: #387c39;
+            transform: translateY(1px);
+        }
+        
+        .delete-btn {
+            background-color: #e50e96;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .delete-btn:hover {
+            background-color: #d32f2f;
+            transform: translateY(-3px);
+        }
+        
+        .delete-btn:active {
+            background-color: #c62828;
+            transform: translateY(1px);
+        }
+
+        .button-container {
+        display: flex;
+        gap: 10px; /* Add space between buttons */
+        align-items: center; /* Align buttons vertically */
+        justify-content: flex-start; /* Align buttons horizontally */
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="l-nav">
+            <div class="user-name"><h2>Hi MUGESH KARTHI GS</h2></div>
+            <div class="nav-list">
+                <ul>
+                    <li><a href="/dashboard">Dash Board</a></li>
+                    <li class="f-status"> <a href="/">Flight Status</a> </li>
+                    <li><a href="/addflight">Add Flight</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="right-container">
+            <center>
+                <div class="header">
+                    <h1>FLIGHT STATUS</h1>
+                </div>
+                <div class="flight-count">
+                    <h2>Total Flights: {{ total_flights }}</h2>
+                </div>
+            </center>
+            <div class="content">
+                <table>
+                    <tr>
+                        <th>S.NO</th> <!-- New Serial Number Column -->
+                        <th>PNR No</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Time</th>
+                        <th>Economy</th>
+                        <th>Premium Economy</th>
+                        <th>Business</th>
+                        <th>First Class</th>
+                        <th>Date</th>
+                        <th>Everyday</th>
+                        <th>Actions</th> <!-- New column for Edit/Delete -->
+                    </tr>
+                    {% for flight in flights %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td> <!-- Serial Number -->
+                        <td>{{ flight.pnr_no }}</td>
+                        <td>{{ flight.From }}</td>
+                        <td>{{ flight.To }}</td>
+                        <td>{{ flight.dept_time }}</td>
+                        <td>{{ flight.economy_seat }}</td>
+                        <td>{{ flight.pre_economy_seat }}</td>
+                        <td>{{ flight.business_seat }}</td>
+                        <td>{{ flight.first_class_seat }}</td>
+                        <td>{{ flight.date }}</td>
+                        <td>{{ flight.everyday }}</td>
+                        <td>
+                            <div class="button-container">
+                                <!-- Edit button -->
+                                <a href="/editflight/{{ flight.id }}" class="edit-btn">Edit</a>
+                                <!-- Delete button -->
+                                <a href="/deleteflight/{{ flight.id }}" class="delete-btn">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            
+            
+        </div>
+        
+    </div>
+
+
+</body>
+
+</html>
